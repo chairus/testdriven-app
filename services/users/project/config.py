@@ -7,11 +7,12 @@ class BaseConfig:
 	TESTING = False
 	SQLALCHEMY_TRACK_MODIFICATIONS = False
 	SECRET_KEY = 'i_dont_want_it'
+	SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
 
 
 class DevelopmentConfig(BaseConfig):
 	"""Development configuration"""
-	SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+	pass
 
 
 class TestingConfig(BaseConfig):
@@ -22,4 +23,4 @@ class TestingConfig(BaseConfig):
 
 class ProductionConfig(BaseConfig):
 	"""Production configuration"""
-	SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+	pass
