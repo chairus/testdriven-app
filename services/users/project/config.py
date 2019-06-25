@@ -2,17 +2,20 @@
 
 import os
 
-"""Base configuration Common configuration for all types of environment"""
+
 class BaseConfig:
-    TESTING = False
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY = 'i_dont_want_it'
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+	"""Base configuration """
+	TESTING = False
+	SQLALCHEMY_TRACK_MODIFICATIONS = False
+	SECRET_KEY = 'i_dont_want_it'
+	SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+	DEBUG_TB_ENABLED = False
+	DEBUG_TB_INTERCEPT_REDIRECTS = False
 
 
-"""Development configuration Contains configuration for development environment"""
 class DevelopmentConfig(BaseConfig):
-    pass
+	"""Development configuration"""    
+	DEBUG_TB_ENABLED = True
 
 
 """Testing configuration Contains configuration for testing environment"""
