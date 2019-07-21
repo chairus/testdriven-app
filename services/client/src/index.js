@@ -8,9 +8,12 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      users: []
+      users: [],
+      username: "",
+      email: ""
     };
     this.addUser = this.addUser.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   };
 
   componentDidMount() {
@@ -26,7 +29,11 @@ class App extends Component {
               <br/>
               <h1 className="title is-1">All Users</h1>
               <hr/><br/>
-              <AddUser addUser={this.addUser}/>
+              <AddUser 
+              	addUser={this.addUser} 
+              	handleChange={this.handleChange} 
+              	username={this.state.username}
+              	email={this.state.email}/>
               <br/><br/>
               <UsersList users={this.state.users} />
             </div>
@@ -44,7 +51,24 @@ class App extends Component {
 
   addUser(event) {
   	event.preventDefault();
-  	console.log('sanity check!');
+  	
+  	const data = {
+  		username: this.state.username,
+  		email: this.state.email
+  	};
+
+  	axios.post(`${process.env.REACT_APP_USERS_SERVICE_URL}/users`, data)
+  	.then((res) => { 
+  		this.getUsers();
+  		this.setState({ username: "", email: "" }) 
+  	})
+  	.catch((err) => { console.log(err); });
+  };
+
+  handleChange(event) {
+  	const data = {};
+  	data[event.target.name] = event.target.value;
+  	this.setState(data);
   }
 };
 
