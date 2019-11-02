@@ -12,8 +12,9 @@ class App extends Component {
       username: "",
       email: ""
     };
-    this.addUser = this.addUser.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    // Uncomment if using the OLD WAY
+    // this.addUser = this.addUser.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
   };
 
   componentDidMount() {
@@ -30,8 +31,8 @@ class App extends Component {
               <h1 className="title is-1">All Users</h1>
               <hr/><br/>
               <AddUser 
-              	addUser={this.addUser} 
-              	handleChange={this.handleChange} 
+              	addUser={this._addUser} 
+              	handleChange={this._handleChange} 
               	username={this.state.username}
               	email={this.state.email}/>
               <br/><br/>
@@ -49,27 +50,51 @@ class App extends Component {
   	.catch((err) => { console.log(err); });
   }
 
-  addUser(event) {
-  	event.preventDefault();
-  	
-  	const data = {
-  		username: this.state.username,
-  		email: this.state.email
-  	};
+  _addUser = (event) => {
+    event.preventDefault();
+    
+    const data = {
+      username: this.state.username,
+      email: this.state.email
+    };
 
-  	axios.post(`${process.env.REACT_APP_USERS_SERVICE_URL}/users`, data)
-  	.then((res) => { 
-  		this.getUsers();
-  		this.setState({ username: "", email: "" }) 
-  	})
-  	.catch((err) => { console.log(err); });
-  };
-
-  handleChange(event) {
-  	const data = {};
-  	data[event.target.name] = event.target.value;
-  	this.setState(data);
+    axios.post(`${process.env.REACT_APP_USERS_SERVICE_URL}/users`, data)
+    .then((res) => { 
+      this.getUsers();
+      this.setState({ username: "", email: "" }) 
+    })
+    .catch((err) => { console.log(err); });
   }
+
+  _handleChange = (event) => {
+    const data = {};
+    data[event.target.name] = event.target.value;
+    this.setState(data);
+  }
+
+  // THE OLD WAY
+  // addUser(event) {
+  //   console.log(this);
+  // 	event.preventDefault();
+  	
+  // 	const data = {
+  // 		username: this.state.username,
+  // 		email: this.state.email
+  // 	};
+
+  // 	axios.post(`${process.env.REACT_APP_USERS_SERVICE_URL}/users`, data)
+  // 	.then((res) => { 
+  // 		this.getUsers();
+  // 		this.setState({ username: "", email: "" }) 
+  // 	})
+  // 	.catch((err) => { console.log(err); });
+  // };
+
+  // handleChange(event) {
+  // 	const data = {};
+  // 	data[event.target.name] = event.target.value;
+  // 	this.setState(data);
+  // }
 };
 
 ReactDOM.render(
